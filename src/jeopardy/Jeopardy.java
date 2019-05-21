@@ -36,7 +36,7 @@ import com.sun.javafx.scene.EnteredExitedHandler;
 public class Jeopardy implements ActionListener {
 	private JButton firstButton;
 	private JButton secondButton;
-	private JButton thirdButton, fourthButton;
+	private JButton thirdButton, fourthButton, fifthButton;
 	private JPanel quizPanel;
 	private int score = 0;
 	private JLabel scoreBox = new JLabel("0");
@@ -61,13 +61,13 @@ public class Jeopardy implements ActionListener {
 		JPanel quizPanel = new JPanel();
 
 		// 4. Add the header component to the quizPanel
-		quizPanel.add(createHeader("The Dinosaurs"));
+		quizPanel.add(createHeader("The Slightly Impossible Questions"));
 
 		// 5. Add the quizPanel to the frame
 		frame.add(quizPanel);
 		
 		// 6. Use the createButton method to set the value of firstButton
-		firstButton = createButton("$100");
+		firstButton = createButton("$200");
 
 		// 7. Add the firstButton to the quizPanel
 		quizPanel.add(firstButton);
@@ -76,7 +76,7 @@ public class Jeopardy implements ActionListener {
 		// game looks like Figure 1 in the Jeopardy Handout - http://bit.ly/1bvnvd4.
 
 		// 9. Use the secondButton variable to hold a button using the createButton method
-		secondButton = createButton("$200");
+		secondButton = createButton("$400");
 		
 		// 10. Add the secondButton to the quizPanel
 		quizPanel.add(secondButton);
@@ -86,10 +86,20 @@ public class Jeopardy implements ActionListener {
 		secondButton.addActionListener(this);
 
 		// 12. Write the code to complete the actionPerformed() method below
-		
+		// Done
 
 		// 13. Add buttons so that you have $200, $400, $600, $800 and $1000 questions
+		thirdButton = createButton("$600");
+		fourthButton = createButton("$800");
+		fifthButton = createButton("$1000");
 		
+		quizPanel.add(thirdButton);
+		quizPanel.add(fourthButton);
+		quizPanel.add(fifthButton);
+		
+		thirdButton.addActionListener(this);
+		fourthButton.addActionListener(this);
+		fifthButton.addActionListener(this);
 		
 		 /*
 		 * [optional] Use the showImage or playSound methods when the user answers a
@@ -130,7 +140,7 @@ public class Jeopardy implements ActionListener {
 		if (buttonPressed == firstButton) {
 
 			// Call the askQuestion() method
-			askQuestion("How many toes does an English carpet toad have on its front left foot?", "4", 100);
+			askQuestion("In what city is the Space Needle located?", "What is Seattle", 200, "What is Seattle, Washington");
 		}
 		
 		// Complete the code in the askQuestion() method. When you play the game, the score should change.
@@ -139,15 +149,34 @@ public class Jeopardy implements ActionListener {
 		if (buttonPressed == secondButton) {
 
 			// Call the askQuestion() method with a harder question
-			askQuestion("What is the meaning of life, the universe, and everything?", "4", 200);
+			askQuestion("How many toes does an English carpet toad have on its front left foot?", "What is 4", 400, null);
+		}
+		
+		if (buttonPressed == thirdButton) {
+
+			// Call the askQuestion() method with a harder question
+			askQuestion("What is 891 in Binary?", "What is 1101111011", 600, null);
+		}
+		
+		if (buttonPressed == fourthButton) {
+
+			// Call the askQuestion() method with a harder question
+			askQuestion("What is the meaning of life, the universe, and everything?", "What is 42", 800, null);
+		}
+		
+		if (buttonPressed == fifthButton) {
+
+			// Call the askQuestion() method with a harder question
+			askQuestion("What is the average airspeed velocity of a unladen swallow?", "What?! I don't know that!", 1000, null);
 		}
 		
 		// Clear the text on the button that was pressed (set the button text to nothing)
 		buttonPressed.setText("");
+		buttonPressed.removeActionListener(this);
 
 	}
 
-	private void askQuestion(String question, String answer, int prizeMoney) {
+	private void askQuestion(String question, String answer, int prizeMoney, String alternativeAnswer) {
 		
 		// Use the playJeopardyTheme() method to play music while the user thinks of an answer
 		playJeopardyTheme();
@@ -158,7 +187,7 @@ public class Jeopardy implements ActionListener {
 		sound.stop();
 		
 		// If the answer is correct
-		if (response.equals(answer)) {
+		if (response.equals(answer) || response.equals(alternativeAnswer)) {
 
 			// Increase the score by the prizeMoney
 			score += prizeMoney;
