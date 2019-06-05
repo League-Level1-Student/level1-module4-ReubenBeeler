@@ -1,10 +1,13 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Calculator {
+public class Calculator implements ActionListener {
 	
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
@@ -30,15 +33,57 @@ public class Calculator {
 		panel.add(btn4);
 		panel.add(label);
 		
+		btn1.addActionListener(this);
+		btn2.addActionListener(this);
+		btn3.addActionListener(this);
+		btn4.addActionListener(this);
+		
 		frame.setSize(325, 100);
 		frame.setTitle("Calculator");
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
-	Integer add() {
+	
+	Float add() {
 		
-		return 0;
+		return Float.valueOf(box1.getText()) + Float.valueOf(box2.getText());
 	}
 	
+	Float subtract() {
+		
+		return Float.valueOf(box1.getText()) - Float.valueOf(box2.getText());
+	}
+	
+	Float multiply() {
+		
+		return Float.valueOf(box1.getText()) * Float.valueOf(box2.getText());
+	}
+	
+	Float divide() {
+		
+		return Float.valueOf(box1.getText()) / Float.valueOf(box2.getText());
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		if (e.getSource() == btn1) {
+			label.setText(String.valueOf(add()));
+		} else if (e.getSource() == btn2) {
+			label.setText(String.valueOf(subtract()));
+		} else if (e.getSource() == btn3) {
+			label.setText(String.valueOf(multiply()));
+		} else if (e.getSource() == btn4) {
+			label.setText(String.valueOf(divide()));
+		} else {
+			System.out.println("Error");
+		}
+		
+		if (Float.parseFloat(label.getText()) % 1.0 == 0.0) {
+			label.setText(String.valueOf(Integer.parseInt(label.getText().substring(0, label.getText().indexOf(".")))));
+		}
+		
+		frame.setSize(325, 120);
+	}
 }
